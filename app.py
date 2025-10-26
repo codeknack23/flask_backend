@@ -8,17 +8,15 @@ from routes.leads import leads_bp
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# ✅ CORS setup for frontend (localhost) and deployed frontend
 CORS(
     app,
-    resources={r"/api/*": {"origins": "*"}},
+    origins=["http://localhost:3000"],  # explicitly allow your frontend
     supports_credentials=True,
-    allow_headers=["Content-Type", "Authorization"],
-    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"]
 )
 
 db.init_app(app)
-
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(leads_bp, url_prefix="/api/leads")
 
