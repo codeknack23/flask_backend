@@ -13,8 +13,10 @@ db.init_app(app)
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(leads_bp, url_prefix="/api/leads")
 
-with app.app_context():
-    db.create_all()
+@app.route("/")
+def home():
+    return "Flask backend is running!"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
