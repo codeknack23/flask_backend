@@ -8,7 +8,7 @@ from routes.leads import leads_bp
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# ✅ CORS setup
+
 CORS(
     app,
     resources={r"/api/*": {"origins": "*"}},
