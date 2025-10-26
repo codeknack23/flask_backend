@@ -11,7 +11,7 @@ app.config.from_object(Config)
 # CORS setup for frontend on localhost + deployed frontend if any
 CORS(
     app,
-    resources={r"/api/*": {"origins": ["http://localhost:3000", "https://yourfrontenddomain.com"]}},
+    resources={r"/api/*": {"origins": ["http://localhost:3000"]}},
     supports_credentials=True,
     allow_headers=["Content-Type", "Authorization"],
     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
