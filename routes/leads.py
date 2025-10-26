@@ -4,7 +4,7 @@ from utils.auth_middleware import auth_required
 
 leads_bp = Blueprint("leads_bp", __name__)
 
-@leads_bp.route("/", methods=["GET"])
+@leads_bp.route("/", methods=["GET", "OPTIONS"])
 @auth_required
 def get_leads():
     page = int(request.args.get("page", 1))
@@ -29,8 +29,7 @@ def get_leads():
         }
     })
 
-
-@leads_bp.route("/", methods=["POST"])
+@leads_bp.route("/", methods=["POST", "OPTIONS"])
 @auth_required
 def add_lead():
     data = request.get_json()
@@ -44,8 +43,7 @@ def add_lead():
     db.session.commit()
     return jsonify({"message": "Lead added", "lead": {"id": lead.id}})
 
-
-@leads_bp.route("/<int:id>", methods=["PUT"])
+@leads_bp.route("/<int:id>", methods=["PUT", "OPTIONS"])
 @auth_required
 def update_lead(id):
     data = request.get_json()
@@ -60,8 +58,7 @@ def update_lead(id):
     db.session.commit()
     return jsonify({"message": "Lead updated"})
 
-
-@leads_bp.route("/<int:id>", methods=["DELETE"])
+@leads_bp.route("/<int:id>", methods=["DELETE", "OPTIONS"])
 @auth_required
 def delete_lead(id):
     lead = Lead.query.get(id)
