@@ -7,7 +7,16 @@ from routes.leads import leads_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app)
+
+# ✅ CORS setup
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "*"}},  # allow all origins for /api routes
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],  # allow auth header
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+)
+
 db.init_app(app)
 
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
@@ -16,7 +25,6 @@ app.register_blueprint(leads_bp, url_prefix="/api/leads")
 @app.route("/")
 def home():
     return "Flask backend is running!"
-
 
 if __name__ == "__main__":
     app.run(debug=True)
