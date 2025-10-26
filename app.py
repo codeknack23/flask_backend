@@ -9,9 +9,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 # Proper CORS config for local frontend
-CORS(
-    app
-)
+CORS(app, supports_credentials=True)
 
 db.init_app(app)
 app.register_blueprint(auth_bp, url_prefix="/api/auth")

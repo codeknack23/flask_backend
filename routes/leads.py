@@ -4,7 +4,7 @@ from utils.auth_middleware import auth_required
 
 leads_bp = Blueprint("leads_bp", __name__)
 
-@leads_bp.route("/", methods=["GET", "OPTIONS"])
+@leads_bp.route("", methods=["GET", "OPTIONS"])
 @auth_required
 def get_leads():
     page = int(request.args.get("page", 1))
@@ -29,7 +29,7 @@ def get_leads():
         }
     })
 
-@leads_bp.route("/", methods=["POST", "OPTIONS"])
+@leads_bp.route("", methods=["POST", "OPTIONS"])
 @auth_required
 def add_lead():
     data = request.get_json()
