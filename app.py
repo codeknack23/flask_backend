@@ -8,12 +8,13 @@ from routes.leads import leads_bp
 app = Flask(__name__)
 app.config.from_object(Config)
 
+
 CORS(
     app,
-    origins=["http://localhost:3000"],  # explicitly allow your frontend
+    resources={r"/api/*": {"origins": "*"}},  
     supports_credentials=True,
-    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"]
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 )
 
 db.init_app(app)
