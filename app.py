@@ -11,9 +11,9 @@ app.config.from_object(Config)
 # ✅ CORS setup
 CORS(
     app,
-    resources={r"/api/*": {"origins": "*"}},  # allow all origins for /api routes
+    resources={r"/api/*": {"origins": "*"}},
     supports_credentials=True,
-    allow_headers=["Content-Type", "Authorization"],  # allow auth header
+    allow_headers=["Content-Type", "Authorization"],
     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 )
 

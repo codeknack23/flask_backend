@@ -8,12 +8,20 @@ def auth_required(f):
     def decorated(*args, **kwargs):
         token = request.headers.get("Authorization")
         if not token:
-            return jsonify({"error": "No token"}), 401
+            # ✅ Return JSON 401, no redirect
+            return jsonify({"error": "No token provided"}), 401
+
         try:
+            # Split "Bearer <token>"
             token = token.split(" ")[1]
             decoded = jwt.decode(token, Config.SECRET_KEY, algorithms=["HS256"])
             request.user = decoded
-        except Exception:
-            return jsonify({"error": "Invalid token"}), 403
+        except jwt.ExpiredSignatureError:
+            return jsonify({"error": "Token expired"}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({"error": "Invalid token"}), 401
+        except Exception as e:
+            return jsonify({"error": str(e)}), 401
+
         return f(*args, **kwargs)
     return decorated
